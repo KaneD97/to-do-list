@@ -14,11 +14,11 @@ function clicked() {
   let data = input.value;
   let ul = document.getElementById("ul");
 
-  var li = document.createElement("li");
-  var chk = document.createElement("input");
+  let li = document.createElement("li");
+  let chk = document.createElement("input");
   chk.setAttribute("type", "checkbox");
   li.appendChild(chk);
-  var t = document.createTextNode(data);
+  let t = document.createTextNode(data);
   li.appendChild(t);
   if (data === "") {
     alert("You must write something!");
@@ -27,13 +27,17 @@ function clicked() {
   }
 }
 
-function refresh(){
-let li = document.querySelectorAll("input[type='checkbox']");
-let checked = 0;
-li.forEach(function(e){
-  if(e.checked){
-    checked++;
-  }
-});
-let p = document.getElementById("p").innerText = "You have completed " + checked + " tasks";
+function refresh() {
+  let li = document.querySelectorAll("input[type='checkbox']");
+  let checked = 0;
+  li.forEach(function(e) {
+    if (e.checked) {
+      checked++;
+    }
+  });
+  let p = (document.getElementById("p").innerText =
+    "You have completed " + checked + " tasks");
 }
+// Instead "1 tasks" change it "1 task"
+// Not have to click refresh button everytime I tick tasks off
+// Replace foreach with Map function and filter

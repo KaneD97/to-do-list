@@ -6,18 +6,20 @@ document.getElementById("add-task").addEventListener("click", function(e) {
   addTask();
 });
 
-document.getElementById("refresh").addEventListener("click", function(e) {
-  refresh();
-});
+
+function addOnChangeEventListenerToAllTasks(){
+[...document.querySelectorAll("input[type='checkbox']")].map(checkbox => checkbox.addEventListener('change',
+  updateTaskProgressTitle));
+}
 
 function addTask() {
-  const { value } = document.getElementById("search");
-  
-  if (value === '') {
+  const { value } = document.getElementById("type-in-task");
+
+  if (value === "") {
     alert("You must write something!");
     return;
   }
-  
+
   let ul = document.getElementById("ul");
   let li = document.createElement("li");
   let chk = document.createElement("input");
@@ -26,33 +28,26 @@ function addTask() {
   let t = document.createTextNode(value);
   li.appendChild(t);
   ul.appendChild(li);
+  addOnChangeEventListenerToAllTasks();
 }
 
-function refresh() {
+function updateTaskProgressTitle() {
   const elements = [...document.querySelectorAll("input[type='checkbox']")];
-
-  let li = document.querySelectorAll("input[type='checkbox']");
-  let checked = 0;
-  li.forEach(function(e) {
-    if (e.checked) {
-      checked++;
-    }
-  });
-
+  let checked = elements.filter(checkbox => checkbox.checked).length;
   document.getElementById("p").innerText = getStatus(checked);
 }
 
 function getStatus(completedTasks) {
   if (completedTasks === 0) {
-    return 'Complete some tasks!';
+    return "Complete some tasks!";
   }
 
   if (completedTasks === 1) {
-    return 'You have completed 1 task.';
+    return "You have completed 1 task.";
   }
 
   return `You have completed ${completedTasks} tasks.`;
 }
-// Instead "1 tasks" change it "1 task"
-// Not have to click refresh button everytime I tick tasks off
-// Replace foreach with Map function and filter
+// Instead "1 tasks" change it "1 task" - DONE
+// Not have to click refresh button everytime I tick tasks off - DONE
+// Replace foreach with Map function and filter - DONE

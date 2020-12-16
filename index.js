@@ -20,21 +20,27 @@ function addTask() {
     return;
   }
 
-  let ul = document.getElementById("ul");
+let tasks =[...document.querySelectorAll("li")].filter(t => t.innerText === value)
+if(tasks.length > 0){
+  alert("This task already exists!");
+  return;
+}
+
+  let taskList = document.getElementById("task-list");
   let li = document.createElement("li");
   let chk = document.createElement("input");
   chk.setAttribute("type", "checkbox");
   li.appendChild(chk);
   let t = document.createTextNode(value);
   li.appendChild(t);
-  ul.appendChild(li);
+  taskList.appendChild(li);
   addOnChangeEventListenerToAllTasks();
 }
 
 function updateTaskProgressTitle() {
   const elements = [...document.querySelectorAll("input[type='checkbox']")];
   let checked = elements.filter(checkbox => checkbox.checked).length;
-  document.getElementById("p").innerText = getStatus(checked);
+  document.getElementById("task-progress-message").innerText = getStatus(checked);
 }
 
 function getStatus(completedTasks) {

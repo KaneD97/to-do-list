@@ -6,10 +6,8 @@ document.getElementById("add-task").addEventListener("click", function(e) {
   addTask();
 });
 
-
-function addOnChangeEventListenerToAllTasks(){
-[...document.querySelectorAll("input[type='checkbox']")].map(checkbox => checkbox.addEventListener('change',
-  updateTaskProgressTitle));
+function checkItemAlreadyExists(value) {
+  return [...document.querySelectorAll("li")].some(t => t.innerText === value);
 }
 
 function addTask() {
@@ -20,21 +18,20 @@ function addTask() {
     return;
   }
 
-let tasks =[...document.querySelectorAll("li")].filter(t => t.innerText === value)
-if(tasks.length > 0){
-  alert("This task already exists!");
-  return;
-}
+  if (checkItemAlreadyExists(value)) {
+    alert("This task already exists!");
+    return;
+  }
 
   let taskList = document.getElementById("task-list");
   let li = document.createElement("li");
-  let chk = document.createElement("input");
-  chk.setAttribute("type", "checkbox");
-  li.appendChild(chk);
+  let input = document.createElement("input");
+  input.setAttribute("type", "checkbox");
+  input.addEventListener('change', updateTaskProgressTitle);
+  li.appendChild(input);
   let t = document.createTextNode(value);
   li.appendChild(t);
   taskList.appendChild(li);
-  addOnChangeEventListenerToAllTasks();
 }
 
 function updateTaskProgressTitle() {
